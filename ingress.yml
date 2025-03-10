@@ -1,0 +1,120 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: microservices-ingress
+  namespace: tsm
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+    nginx.ingress.kubernetes.io/proxy-body-size: "50m"
+    nginx.ingress.kubernetes.io/configuration-snippet: |
+      proxy_set_header Upgrade $http_upgrade;
+      proxy_set_header Connection "Upgrade";
+spec:
+  ingressClassName: nginx
+  tls:
+    - hosts:
+        - api.local
+      secretName: tls-secret # Ensure you have this TLS secret configured
+
+  rules:
+    - host: api.local
+      http:
+        paths:
+          # API Gateway (Main Entry)
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: api-gateway
+                port:
+                  number: 80
+
+          # Eureka Service
+          - path: /eureka
+            pathType: Prefix
+            backend:
+              service:
+                name: eureka
+                port:
+                  number: 8761
+
+          # Account Service
+          - path: /api/v3/accounts
+            pathType: Prefix
+            backend:
+              service:
+                name: account-service
+                port:
+                  number: 8084
+
+          # Event Command Service
+          - path: /event-command-service
+            pathType: Prefix
+            backend:
+              service:
+                name: event-command-service
+                port:
+                  number: 8081
+
+          # Event Query Service
+          - path: /event-query-service
+            pathType: Prefix
+            backend:
+              service:
+                name: event-query-service
+                port:
+                  number: 8080
+
+          # Event Indexer Service
+          - path: /event-indexer-service
+            pathType: Prefix
+            backend:
+              service:
+                name: event-indexer-service
+                port:
+                  number: 8086
+
+          # Notification Service
+          - path: /notification-service
+            pathType: Prefix
+            backend:
+              service:
+                name: notification-service
+                port:
+                  number: 8085
+
+          # Grafana
+          - path: /grafana
+            pathType: Prefix
+            backend:
+              service:
+                name: grafana
+                port:
+                  number: 3000
+
+          # Prometheus
+          - path: /prometheus
+            pathType: Prefix
+            backend:
+              service:
+                name: prometheus
+                port:
+                  number: 9090
+
+          # Kafka (Optional - For UI tools like Kafka Manager)
+          - path: /kafka
+            pathType: Prefix
+            backend:
+              service:
+                name: kafka
+                port:
+                  number: 9092
+
+          # PostgreSQL (Optional - Usually internal)
+          - path: /postgres
+            pathType: Prefix
+            backend:
+              service:
+                name: postgres
+                port:
+                  number: 5432
