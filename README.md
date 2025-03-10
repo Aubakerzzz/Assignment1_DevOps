@@ -103,10 +103,6 @@ They also have their own CI pipeline in `.github/workflows`, each of which only 
 While the API layer used for Hibernate are Spring Data JPA and Spring JDBC, the DDL, unlike the previous version, is set to 'update'.
 The schema creation, versioning, and migrations are all managed by Flyway.
 
-### Distributed Tracing
-
-![image](./static/zipkin.JPG)
-
 ## RUNNING THE APPLICATIONS
 
 Navigate to the root directory and start the containers.
