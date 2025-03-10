@@ -103,22 +103,6 @@ They also have their own CI pipeline in `.github/workflows`, each of which only 
 While the API layer used for Hibernate are Spring Data JPA and Spring JDBC, the DDL, unlike the previous version, is set to 'update'.
 The schema creation, versioning, and migrations are all managed by Flyway.
 
-### Testing
-
-The services `Account`, `Event Command`, `Ticket` , and `Notification` are unit-tested with JUnit, Mockito, and MockMVC, and DB-integration tested with Test Containers.
-
-This project is also being actively checked with SonarLint integrated in the developer's IDE.
-An analysis with SonarQube to would reveal the following:
-![image](./static/sonar.JPG)
-
-### Monitoring
-
-![image](./static/grafana.png)
-
-Spring Boot Actuator exposes the metrics of each services, including the API Gateway and Discovery Server, while a
-third-party exporter exposes the metrics of the database. Prometheus scrapes these, serving as data sources to Grafana,
-which then visualizes the data in the dashboards. The endpoints are accessible through ports 9090 and 3000, respectively.
-
 ### Distributed Tracing
 
 ![image](./static/zipkin.JPG)
@@ -174,4 +158,3 @@ For Account Service, it will be as follows: </br>
 ```bash
 
 ```
-
