@@ -148,9 +148,3 @@ The services below have their own OpenAPI specifications. To access the API Docs
 For Account Service, it will be as follows: </br>
 
 ![image](./static/swagger.JPG)
-
-## Project Tree
-
-```bash
-
-```
