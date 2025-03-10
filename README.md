@@ -21,7 +21,6 @@ Ticket Sales Microservices uses a number of tools and frameworks to work properl
 - Spring Data JPA, Spring JDBC, Flyway
 - Spring Data Redis, Jedis
 - Java API Client for Elasticsearch
-- JUnit, Mockito, MockMVC, Test Containers
 - Java Mail Sender, Gmail SMTP
 - Apache Kafka, Zookeeper
 - Debezium
