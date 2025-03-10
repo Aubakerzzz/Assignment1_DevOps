@@ -1,0 +1,99 @@
+spring:
+  application:
+    name: api-gateway
+  main:
+    web-application-type: reactive
+  cloud:
+    discovery:
+      enabled: true
+    gateway:
+      routes:
+        - id: eureka
+          uri: http://${eureka.instance.hostname}:8761
+          predicates:
+            - Path=/eureka/web
+          filters:
+            - SetPath=/
+        - id: eureka-static
+          uri: http://${eureka.instance.hostname}:8761
+          predicates:
+            - Path=/eureka/**
+
+        - id: account
+          uri: lb://ACCOUNT-SERVICE
+          predicates:
+            - Path=/api/v3/accounts/**
+        - id: event-query
+          uri: lb://EVENT-QUERY-SERVICE
+          predicates:
+            - Path=/api/v3/events/**
+            - Method=GET
+        - id: event-command
+          uri: lb://EVENT-COMMAND-SERVICE
+          predicates:
+            - Path=/api/v3/events/**
+            - Method=POST, PUT, PATCH, DELETE
+        - id: ticket
+          uri: lb://TICKET-SERVICE
+          predicates:
+            - Path=/api/v3/event/**, /api/v3/tickets/**, /api/v3/purchases/**
+
+        - id: account-swagger
+          uri: lb://ACCOUNT-SERVICE
+          predicates:
+            - Path=/account-service/**
+            - Method=GET
+        - id: event-query-swagger
+          uri: lb://EVENT-QUERY-SERVICE
+          predicates:
+            - Path=/event-query-service/**
+            - Method=GET
+        - id: event-command-swagger
+          uri: lb://EVENT-COMMAND-SERVICE
+          predicates:
+            - Path=/event-command-service/**
+            - Method=GET
+        - id: ticket-swagger
+          uri: lb://TICKET-SERVICE
+          predicates:
+            - Path=/ticket-service/**
+            - Method=GET
+
+# Logger configuration
+logging:
+  pattern:
+    console: "%d %-5level %logger : %msg%n"
+    level: "%5p [${spring.application.name:},%X{traceId:-},%X{spanId:-}]"
+  level:
+    org.springframework: info
+    org.hibernate: debug
+
+# Server configuration
+server:
+  port: 9000
+  error:
+    include-binding-errors: always
+    include-message: always
+
+eureka:
+  instance:
+    prefer-ip-address: true
+    hostname: localhost
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://${eureka.instance.hostname}:8761/eureka
+
+# Monitoring
+management:
+  tracing:
+    sampling:
+      probability: 1.0
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always
