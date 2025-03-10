@@ -6,7 +6,7 @@ _Organize events and purchase tickets from different services._
 
 | Links                                                                             | Description    |
 | --------------------------------------------------------------------------------- | -------------- |
-| [![General Badge](https://img.shields.io/badge/version-2.1-COLOR.svg?logo=LOGO")] | Backend - v2.1 |
+| ![General Badge](https://img.shields.io/badge/version-2.1-COLOR.svg?logo=LOGO")   | Backend - v2.1 |
 | [![General Badge](https://img.shields.io/badge/version-2.0-COLOR.svg?logo=LOGO")] | Backend - v2.0 |
 | [![General Badge](https://img.shields.io/badge/version-1.0-COLOR.svg?logo=LOGO")] | Backend - v1.0 |
 
